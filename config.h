@@ -10,8 +10,8 @@ static const char *fonts[]          = { "Liberation Mono:pixelsize=18:antialias=
 static const char dmenufont[]       = "Liberation Mono:pixelsize=18:antialias=true";
 static const char col_gray1[]       = "#000000";
 static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
+static const char col_gray3[]       = "#90f1ef";
+static const char col_gray4[]       = "#000000";
 static const char col_cyan[]        = "#ffadad";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
@@ -23,15 +23,17 @@ static const char *colors[][3]      = {
 static const char *tags[] = { "", "", "", "", "", "", "", "", "", "" };
 
 static const char *tagsel[][2] = {
-	{ "#ffffff", "#ff0000" },
-	{ "#ffffff", "#ff7f00" },
-	{ "#000000", "#ffff00" },
-	{ "#000000", "#00ff00" },
-	{ "#ffffff", "#0000ff" },
-	{ "#ffffff", "#4b0082" },
-	{ "#ffffff", "#9400d3" },
-	{ "#000000", "#ffffff" },
-	{ "#ffffff", "#000000" },
+	{ "#000000", "#ff99c8" },
+	{ "#000000", "#fcf6bd" },
+	{ "#000000", "#d0f4de" },
+	{ "#000000", "#a9def9" },
+	{ "#000000", "#e4c1f9" },
+	{ "#000000", "#ff99c8" },
+	{ "#000000", "#fcf6bd" },
+	{ "#000000", "#d0f4de" },
+	{ "#000000", "#a9def9" },
+	{ "#000000", "#e4c1f9" },
+
 };
 
 static const Rule rules[] = {
@@ -45,7 +47,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.7; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.65; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -63,6 +65,12 @@ static const Layout layouts[] = {
 static const char *mutecmd[] = { "amixer", "-q", "set", "Master", "toggle", NULL };
 static const char *volupcmd[] = { "amixer", "-q", "set", "Master", "5%+", "unmute", NULL };
 static const char *voldowncmd[] = { "amixer", "-q", "set", "Master", "5%-", "unmute", NULL };
+static const char *headphonetoggle[] = { "amixer", "-q", "set", "Headphone", "toggle", NULL };
+static const char *speakertoggle[] = { "amixer", "-q", "set", "Speaker", "toggle", NULL };
+
+
+static const char *brupcmd[] = {  "xbacklight", "-inc", "10", NULL };
+static const char *brdowncmd[] = {  "xbacklight", "-dec", "10", NULL };
 
 
 /* key definitions */
@@ -120,9 +128,13 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	TAGKEYS(			XK_0,			   9)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ 0, XF86XK_AudioMute, spawn, {.v = mutecmd } },
-	{ 0, XF86XK_AudioLowerVolume, spawn, {.v = voldowncmd } },
-	{ 0, XF86XK_AudioRaiseVolume, spawn, {.v = volupcmd } },
+	{ 0, 				XF86XK_AudioMute,	 spawn,	 {.v = mutecmd } },
+	{ 0, 				XF86XK_AudioLowerVolume, spawn,	 {.v = voldowncmd } },
+	{ 0,				XF86XK_AudioRaiseVolume, spawn,  {.v = volupcmd } },
+	{ 0, 				XF86XK_MonBrightnessUp,	 spawn,	 {.v = brupcmd} },
+	{ 0, 				XF86XK_MonBrightnessDown,spawn,	 {.v = brdowncmd} },
+	{ MODKEY, 			XF86XK_AudioLowerVolume, spawn,	 {.v = headphonetoggle} },
+	{ MODKEY, 			XF86XK_AudioRaiseVolume, spawn,	 {.v = speakertoggle} },
 };
 
 /* button definitions */
